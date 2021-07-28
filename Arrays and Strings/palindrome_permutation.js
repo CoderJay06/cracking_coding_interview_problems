@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
     Problem:
         Given a string, write a function to check if it is a permutation of a palindrome.
@@ -39,4 +40,6 @@ console.log(isPermutationOfPalindrome("Tact Coa"))
 console.log(isPermutationOfPalindrome("Tact Coa"))
 console.log(isPermutationOfPalindrome("Tact Coa"))
 
+=======
+>>>>>>> 6fe6170054d260999e61aeca476dd44d5bc45c58
 
