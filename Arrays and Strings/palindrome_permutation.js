@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
     Problem:
         Given a string, write a function to check if it is a permutation of a palindrome.
@@ -28,18 +27,57 @@
  */
         
 
-function isPermutationOfPalindrome(str) {
-    const palindrome = isPalindrome(str);
-    const permutation = isPermutation(str);
+function isPermutationOfPalindrome(phrase) {
+    const table = buildCharFrequencyTable(phrase);
+    return checkMaxOneOdd(table);
+}
+
+function checkMaxOneOdd(table) {
+    let foundOdd = false;
+    for (const count of Object.values(table)) {
+        if (count % 2 === 1) {
+            if (foundOdd) {
+                return false;
+            }
+            foundOdd = true;
+        }
+    }
+    return true;
 }
 
 
+// function getCharNumber(c) {
+//     let a = String.charCodeAt('a');
+//     let z = String.charCodeAt('z');
+//     let val = String.charCodeAt('c');
+//     if (a <= val && val <= z) {
+//         return val - a;
+//     }
+//     return -1;
+// }
+
+function buildCharFrequencyTable(phrase) {
+    const table = {};
+    phrase = phrase.toLowerCase();
+
+    for (let i = 0; i < phrase.length; i++) {
+        let char = phrase[i];
+
+        if (char !== ' ') {
+            table[char]++;
+        }
+    }
+    return table;
+}
+
 
 console.log(isPermutationOfPalindrome("Tact Coa"))
 console.log(isPermutationOfPalindrome("Tact Coa"))
 console.log(isPermutationOfPalindrome("Tact Coa"))
 console.log(isPermutationOfPalindrome("Tact Coa"))
 
-=======
->>>>>>> 6fe6170054d260999e61aeca476dd44d5bc45c58
+
+
+
+
 
