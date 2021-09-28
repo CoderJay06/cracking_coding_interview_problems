@@ -37,52 +37,87 @@
 // function isLetter(char) {
 //     return /[a-zA-Z]/.test(char);
 // }
-// SOLUTION:
+// SOLUTION 1st:
 
-// O(n) time and space
+// // O(n) time and space
+// function oneEditAway(first, second) {
+//     if (first.length === second.length) {
+//         return oneEditReplace(first, second);
+//     } else if (first.length + 1 === second.length) {
+//         return oneEditInsert(first, second);
+//     } else if (first.length - 1 === second.length) {
+//         return oneEditInsert(second, first);
+//     }
+//     return false;
+// }
+
+// function oneEditReplace(s1, s2) {
+//     let foundDifference = false;
+//     for (let i = 0; i < s2.length; i++) {
+//         if (s1[i] !== s2[i]) {
+//             if (foundDifference) {
+//                 return false;
+//             }
+
+//             foundDifference = true;
+//         }
+//     }
+//     return true;
+// }
+
+// // check if you can insert a character into s1 to make s2
+// function oneEditInsert(s1, s2) {
+//     let index1 = 0;
+//     let index2 = 0;
+//     while (index2 < s2.length && index1 < s1.length) {
+//         if (s1[index1] !== s2[index2]) {
+//             if (index1 !== index2) {
+//                 return false;
+//             }
+//             index2++;
+//         } else {
+//             index1++;
+//             index2++;
+//         }
+//     }
+//     return true;
+// }
+
+// SOLUTION 2nd:
+// merge methods into one
+
 function oneEditAway(first, second) {
-    if (first.length === second.length) {
-        return oneEditReplace(first, second);
-    } else if (first.length + 1 === second.length) {
-        return oneEditInsert(first, second);
-    } else if (first.length - 1 === second.length) {
-        return oneEditInsert(second, first);
+    // Length checks
+    if (Math.abs(first.length - second.length) > 1) {
+        return false;
     }
-    return false;
-}
 
-function oneEditReplace(s1, s2) {
-    let foundDifference = false;
-    for (let i = 0; i < s2.length; i++) {
-        if (s1[i] !== s2[i]) {
-            if (foundDifference) {
-                return false;
-            }
+    // get shorter and longer string
+    let s1 = first.length < second.length ? first : second;
+    let s2 = first.length < second.length ? second : first;
 
-            foundDifference = true;
-        }
-    }
-    return true;
-}
-
-// check if you can insert a character into s1 to make s2
-function oneEditInsert(s1, s2) {
     let index1 = 0;
     let index2 = 0;
+    let foundDifference = false;
     while (index2 < s2.length && index1 < s1.length) {
         if (s1[index1] !== s2[index2]) {
-            if (index1 !== index2) {
-                return false;
+            // ensure that this is the first difference found
+            if (foundDifference) return false;
+
+            foundDifference = true;
+
+            if (s1.length === s2.length) { // on replace, move shorter pointer
+                index1++;
             }
-            index2++;
         } else {
-            index1++;
-            index2++;
+            index1++; // if matching, move shorter pointer
         }
+        index2++;
     }
     return true;
 }
 
+// Tests
 console.log(oneEditAway('pale', 'ple')); // true
 console.log(oneEditAway('pales', 'pale')); // true
 console.log(oneEditAway('pale', 'bale')); // true
