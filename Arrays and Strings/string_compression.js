@@ -60,6 +60,7 @@ function stringCompressBad(str) {
     return compressedString.length < str.length ? compressedString : str;
 }
 
+// O(n)
 function compress(str) {
     const compressed = [];
     let countConsecutive = 0;
@@ -75,6 +76,47 @@ function compress(str) {
     }
     return compressed.length < str.length ? compressed.join('') : str;
 }
+
+// more optimal in cases we dont have large number of repeating characters
+function compress(str) {
+    // Check final length and return input string if it would be longer
+    let finalLength = countCompression(str);
+    if (finalLength >= str.length) return str;
+
+    const compressed = new Array(finalLength).fill('');
+    let countConsecutive = 0;
+    for (let i = 0; i < str.length; i++) {
+        countConsecutive++;
+
+        // If next char is different than current, append it to result
+        if (i + 1 >= str.length || str.charAt(i) !== str.charAt(i + 1)) {
+            compressed.push(str.charAt(i));
+            compressed.push(countConsecutive);
+            countConsecutive = 0;
+        }
+    }
+    return compressed.join('');
+}
+
+
+function countCompression(str) {
+    let compressedLength = 0;
+    let countConsecutive = 0;
+    for (let i = 0; i < str.length; i++) {
+        countConsecutive++;
+
+        // if next char is different than current, increase length
+        if (i + 1 >= str.length || str.charAt(i) !== str.charAt(i + 1)) {
+            compressedLength += 1 + countConsecutive;
+            countConsecutive = 0;
+        }
+    }
+    return compressedLength;
+}
+
+
+
+
 
 
 console.log(stringCompression('aabcccccaaa')); // a2b1c5a3
