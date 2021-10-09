@@ -44,5 +44,20 @@ function stringCompression(str) {
     return compressedStr.join('');
 }
 
+function stringCompressBad(str) {
+    let compressedString = "";
+    let countConsecutive = 0;
+    for (let i = 0; i < str.length; i++) {
+        countConsecutive++;
+
+        // if next char is diff than current, append it to result
+        if (i + 1 >= str.length || str.charAt(i) !== str.charAt(i + 1)) {
+            compressedString += "" + str.charAt(i) + countConsecutive;
+            countConsecutive = 0;
+        }
+    }
+    return compressedString.length < str.length ? compressedString : str;
+}
+
 
 console.log(stringCompression('aabcccccaaa')); // a2b1c5a3
